@@ -1,0 +1,1 @@
+_This article is part of an ongoing series on [Azure Functions](../Five-Days-of-Azure-Functions/)_.

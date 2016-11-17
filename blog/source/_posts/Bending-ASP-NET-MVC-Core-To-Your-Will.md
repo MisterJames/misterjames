@@ -1,4 +1,4 @@
-title: Bending ASP.NET MVC Core To Your Will
+title: Bending ASP.NET Core MVC To Your Will
 layout: post
 tags:
   - ASP.NET Core MVC
@@ -119,13 +119,13 @@ public void ConfigureServices(IServiceCollection services)
 Here are some great resources that will help you explore other uses of these interfaces.
 
 **Filip Wojcieszyn's Posts and Community Contributions**
- - https://github.com/filipw/Strathweb.TypedRouting.AspNetCore
- - http://www.strathweb.com/2015/11/localized-routes-with-asp-net-5-and-mvc-6/
- - http://www.strathweb.com/2015/03/strongly-typed-routing-asp-net-mvc-6-iapplicationmodelconvention/
- - http://www.strathweb.com/2016/06/global-route-prefix-with-asp-net-core-mvc-revisited/
+ - [Typed Routing](https://github.com/filipw/Strathweb.TypedRouting.AspNetCore)
+ - [Localized Routes](http://www.strathweb.com/2015/11/localized-routes-with-asp-net-5-and-mvc-6/)
+ - [Application Model Conventions](http://www.strathweb.com/2015/03/strongly-typed-routing-asp-net-mvc-6-iapplicationmodelconvention/)
+ - [Route Prefixes](http://www.strathweb.com/2016/06/global-route-prefix-with-asp-net-core-mvc-revisited/)
  
 **Steve Smith's article on feature folders**
- - https://msdn.microsoft.com/magazine/mt763233
+ - [Feature Folders on MSDN](https://msdn.microsoft.com/magazine/mt763233)
 
 As you can see, you are not locked into the default behaviours of ASP.NET Core MVC, and you have many surface areas acting as cusomization points for you to exploit.
 

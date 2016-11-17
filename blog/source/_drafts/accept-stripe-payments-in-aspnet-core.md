@@ -36,7 +36,7 @@ In short, the steps are as follows:
 
  1. 
 
-Finally, check out the Monsters' video on Channel 9 where I code this live.
+Finally, check out the Monsters' video on Channel 9 where I walk through the code for this live.
 
 <iframe src="https://channel9.msdn.com/Series/aspnetmonsters/Episode-26-GitHub-Authentication-in-ASPNET-Core/player" width="640" height="360" allowFullScreen frameBorder="0"></iframe>
 
