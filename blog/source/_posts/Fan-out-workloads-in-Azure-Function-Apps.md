@@ -7,7 +7,7 @@ categories:
   - Development
 authorId: james_chambers
 featureImage: https://jcblogimages.blob.core.windows.net:443/img/2016/11/chained-function-results.png
-originalUrl: 'http://jameschambers.com/'
+originalUrl: 'http://jameschambers.com/2016/11/Fan-out-workloads-in-Azure-Function-Apps/'
 date: 2016-11-16 06:51:32
 ---
 You want to scale wide. That is it. That is the trick and the magic and the secret sauce of cloud computing. Do as much as you want to, as long as it's as little as possible. Break your work down into smaller parts and let Azure Functions handle the scaling part.

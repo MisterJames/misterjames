@@ -1,19 +1,30 @@
 title: Writing Azure Functions in F#
 layout: post
-date: 2016-11-16 17:00:00
+date: 2016-11-19 17:00:00
 categories:
   - Development
 tags:
   - Azure
   - Azure Functions
+featureImage: https://jcblogimages.blob.core.windows.net:443/img/2016/11/azure_functions_fsharp_title.png
 authorId: simon_timms
 ---
 
-*Thanks* Thanks to James for letting me guest author on his blog. I love funcitons and I love F# so this was a fun post to write. 
+**Guest post by Monster Simon Timms** 
+
+My good friend [Simon Timms](https://twitter.com/stimms) (not Tibbs) reached out to me on the first day of this series and said, "I'd love to write a post on Functions using F#". I said that sounded like a fantastic idea, and now here we are. (Well, here I am, with his post. He's on a beach...) 
+
+![Writing Azure Functions in F#](https://jcblogimages.blob.core.windows.net:443/img/2016/11/azure_functions_fsharp_title.png)
+
+<!-- more -->
+{% include_markdown _includes/Five-Days-Overview %}
+
+*Thanks* Thanks to James for letting me guest author on his blog. I love functions and I love F# so this was a fun post to write. 
 -Simon
 
-Azure functions can be written directly in a wide variety of languages
+_Psst...thanks back at you Simon! Great post and honoured you offered to write it as an addition to the series!_
 
+Azure functions can be written directly in a wide variety of languages:
 * Bash
 * Batch
 * C# 
@@ -24,17 +35,13 @@ Azure functions can be written directly in a wide variety of languages
 
 You can also build an executable which can run on Windows and upload it to the function to be executed. This approach allows for maximum compatibility with most any workload you can throw at it. Of all the natively supported languages I think F# fits most nicely into the functional mold. 
 
-![azure_functions_fsharp_title.png](/content/azure_functions_fsharp_title.png)
-
-<!-- more -->
-
 Of course you can write your functions in C# and everything will be fine but wouldn't you rather write them in a functional programming language? 
 
 F# isn't perhaps a pure functional programming language but it is close enough to have some great advantages over C#. Declarations are immutable by default, the syntax is terse and stylish, null exceptions are all but unheard of and it has fantastic support for filter which are useful when dealing with any sort of complex data. It is a natively supported language on Azure Functions so let's see how that works. 
 
 You can start with a new Azure function but instead of selecting C# let's take F#. For our example we'll base it off of the HTTP Triggered function.
 
-![azure_functions_fsharp_select_trigger.png](/content/azure_functions_fsharp_select_http_trigger.png)
+![azure_functions_fsharp_select_trigger.png](https://jcblogimages.blob.core.windows.net:443/img/2016/11/azure_functions_fsharp_select_http_trigger.png)
 
 In our scenario we'd like to pull back the headlines from the BBC World Service in JSON format. This, as it turns out, is pretty easy to do in F# thanks to type providers. 
 
@@ -115,17 +122,8 @@ let Run(req: HttpRequestMessage, log: TraceWriter) =
     )
 ```
 
-With that we have an Azure Function written in a functional programming language. 20 lines all told, including blank lines.
+With that we have an Azure Function written in a functional programming language. 20 lines all told,including blank lines.
 
 
-# Other articles in this series
-
-Day 1: [How to organize types in your Azure Function scripts](http://jameschambers.com/2016/11/How-to-organize-types-in-your-scripts)
-
-Day 2: [How to resize an image uploaded to Azure Blog Storage](http://jameschambers.com/2016/11/Resizing-Images-Using-Azure-Functions)
-
-Day 3: [How to "fan out" work so your Functions can scale](http://jameschambers.com/2016/11/Fan-out-workloads-in-Azure-Function-Apps)
-
-Day 4: How to deploy to Azure Functions using GitHub (Up Next!)
-
-Day 5: How to import third-party libraries (Coming soon)
+## Other articles in this series
+{% include_markdown _includes/Five-Days-Menu %}
