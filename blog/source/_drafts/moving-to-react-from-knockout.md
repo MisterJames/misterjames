@@ -26,7 +26,9 @@ The project we were working with actually had some TypeScript in it, though it w
 
 As a side note, knowing that we have to do all of those installs, we can shortcut our command to the following:
 
-`npm install react @types/react react-dom @types/react-dom typescript@latest`
+
+
+`npm install react @types/react react-dom @types/react-dom typescript@latest --save`
 
 ## So, This is a little different
 

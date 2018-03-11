@@ -2,6 +2,8 @@ title: 'BakeBot - A Bot for our Bakery Built with the Microsoft Bot Framework'
 layout: post
 tags:
   - Bot Framework
+  - BakeBot
+  - Chez Angela
 categories:
   - Development
   - Chez Angela

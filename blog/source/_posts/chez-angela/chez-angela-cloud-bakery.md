@@ -12,7 +12,7 @@ categories:
 authorId: james_chambers
 featureImage: https://jcblogimages.blob.core.windows.net/img/2017/cloud-bakery-banner.png
 originalUrl: 'http://jameschambers.com/2018/03/chez-angela-cloud-bakery/'
-date: 2018-03-01 22:12:54
+date: 2018-03-03 22:12:54
 ---
 
 My wife and I are undertaking an enormous shift in our lives and entering the food service industry. My day job will continue to be consulting in the Azure, Cognitive Services and ASP.NET Core space, but I am also privileged to work side-by-side with my incredible wife as we build a bakery together.
