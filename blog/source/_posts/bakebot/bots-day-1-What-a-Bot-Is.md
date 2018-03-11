@@ -1,4 +1,4 @@
-title: 'BakeBot - A Bot for our Bakery Built with the Microsoft Bot Framework'
+title: 'BakeBot Day 1: What a Bot Is (And What It Is Not)'
 layout: post
 tags:
   - Bot Framework
@@ -6,20 +6,19 @@ categories:
   - Development
   - Chez Angela
 authorId: james_chambers
-originalUrl: 'http://jameschambers.com/2018/03/bots-day-1-What-a-bot-is/'
+originalUrl: 'http://jameschambers.com/2018/03/bakebot/bots-day-1-What-a-bot-is/'
 date: 2018-03-08 23:12:54
 ---
 
-
-BakeBot Day 1: What a Bot Is (And What It Is Not)
-
 One of the most important things in bot creation is understanding what a bot should actually be. The last thing we want to do is to over extend ourselves. Complexity is always the enemy when we're working on software, and bots have a very real human component in their routing operation that makes things complex enough on their own without us adding in any extra.
 
-feature image
+![BakeBot at Chez Angela](https://jcblogimages.blob.core.windows.net/img/2018/2018-03-11-c3bb11ff.png)
 
 Before we dive into building a bot, let's start by getting on the same page of understanding and filling in some background details. If nothing else, this will give you visibility into why I've approached things the way I have.
 
 <!-- more -->
+
+{% include_markdown _includes/bots-overview %}
 
 ## It's Like They Knew We Were Coming
 
@@ -27,7 +26,7 @@ Over the years I've made several stabs at building some type of command-and-answ
 
 If you've shared in any of these adventures, I have good news, friends: just like me, you've been training to write bots.
 
->> "This is going to be awesome." - me, giggling in the Cognitive Services AI Immersion Workshop at //Build 2017
+> "This is going to be awesome." - me, giggling in the Cognitive Services AI Immersion Workshop at //Build 2017
 
 The further I dive into the Bot Framework and the other complimentary services to support it, the more I feel at home. The types of things I have to do to build a bot feel natural, like things that I've been doing for years. The SDKs are well thought out and improving. Lessons learned in other areas of SDK and API design have been applied and are evolving and being tailored to meet the specific needs of interacting with people using conversation. And the cloud enables some very interesting capabilities without the effort that would have been required just a few short years ago.
 
@@ -61,16 +60,21 @@ The entry point for any bot is the user interface (there is an exception to this
 
 User interaction is configured for each channel in the Azure portal. You will need to register your application with each of the respective third parties (such as creating an application in Facebook) and then setup application IDs, webhooks or other aspects to establish channel communication. 
 
-The bot itself is a Web API project that accepts HTTP POST requests (note that the V3 API is written on .NET full framework, whereas the upcoming V4 is written for .NET Core). 
+In the context of the Microsoft Bot Framework, the bot itself is a Web API project that accepts HTTP POST requests (note that the V3 API is written on .NET full framework, whereas the upcoming V4 is written for .NET Core). 
 
 The incoming message from a channel - the user input - comes across the wire as JSON and goes through the model binding process as would any payload in your MVC or Web API project.  There are pre-defined types provided by the framework to help make this fairly painless.
 
 In your API controller you are responsible for inspecting the type of activity that was sent from the channel and pushing the message to the appropriate code. This may mean that you've recieved text from a user, that someone has liked a response your bot sent, or a signal that a user has joined a conversation.
 
-In the event of a non-system message, you're likely going to send the activity on to a dialog class that will manage the conversation with the user. The purpose of each dialog is to segregate related bits of code that would help to form a user experience. The typical pattern is to create a "root" dialog from which all conversations can be managed. From the root, you guide users by using suggestions or buttons so that they can move in a direction that helps them find success. 
+In the event of a non-system message, you're likely going to send the activity on to the Bot Framework bits. The framework takes care of figuring out state, propagating channel-specific data to your code and helping you restore conversational state. Usually, this will mean something like passing your message through the framework to a dialog class. The purpose of each dialog is to segregate related bits of code that would help to form a user experience. The typical pattern is to create a "root" dialog from which all conversations can be managed. From the root, you guide users by using suggestions or buttons so that they can move in a direction that helps them find success. 
 
 So, this is where it gets interesting (and more than a little bit complicated).
 
+ - How do you manage state?
+ - What is the "shape" of a conversation?
+ - What happens if a user goes off script?
+
+These are just a few of many great questions you're going to have to think through, as I'm currently doing, and hopefully I can add some insight to your thoughts along the way. (And, hey! Please add your insights along the way as well!)
 
 ## You Can't Build a Perfect Bot, So Don't Try (From the "Personal Experience" files of James)
 
@@ -78,23 +82,19 @@ While your job is to create an experience (dialog) or set of experiences (dialog
 
 > when r u open and is there chocolate pie. it's for Wedsnday. it's my aunts birthday and i haven't seen her in a long time and I think she likes it. or we could have a cake if you have some  - Actual Facebook message
 
+In an upcoming post I'll share a lot more on this, but just know that you can't solve for "user" quite yet. It really comes down to making sure you guide the user, and we'll look at that in greater detail as we go.
 
+## Getting Into the Bits
 
-## Chosing a Channel
-In conversation with other bot writers over the last little while the conversation keeps coming up around how they chose the channels they use in their bot. There is no magic recipe for which channels to use for your organization, but in my case the primary channels will be SMS and Facebook and later via our web site.  For you, the choice will likely come down to the way your users already behave. For one colleague, this meant using Skype as an internal knowledge bot. For another, it was a combination of SMS and web. 
+As a primer, you're likely going to need to install a few things or at least update some bits on your machine. Here's some links that will help to get you started:
+ - [Microsoft Azure](https://portal.azure.com) - Create an account
+ - [Microsoft Bot Framework](https://dev.botframework.com/bots) - Create a bot 
+ - [Visual Studio 2017](https://www.visualstudio.com/downloads/) - Get a good editor
+ - [Bot Project Templates](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-quickstart) - Get the code gen bits
 
-Here's why we chose to move ahead with our selection of SMS and Facebook:
+Okay...I'll try to keep this content coming as fast I work through it. Feel free to give any feedback you have along the way as we learn together.
 
- - Our bot users are mostly customers. When they place orders we proactively start conversations with them. With the conversation primed and started on our end, we can know with greater certainty how to guide the user into the pit of bot success.
- - Some of our users initiate conversations with us by texting our company phone number. By using the SMS channel we can do a "soft" identification with the channel data, resolve the customer and give them information about upcoming orders.
- - Most of our communication is done with customers on Facebook. Approximately 80% of inquiries are about product information and store hours and location. As our Social Media presence grows having a bot to handle this 80% is an effective way to keep our labor costs down for questions like, "When will you have Schmoo Tortes again?" or "Do I have a pie ordered for next Thursday?" or even, "When will you be selling that bread you have with roasted potatoes and caramelized onions?"
+Happy coding!
 
-
-
-
-
-
-
-
-
+{% include_markdown _includes/bots-overview %}
 

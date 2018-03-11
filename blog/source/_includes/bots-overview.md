@@ -1,0 +1,1 @@
+_This article is part of an ongoing series on the [Microsoft Bot Framework](/2018/03/bakebot/bots-day-0-Building-Bots-With-Microsofts-Bot-Framework/)_.
