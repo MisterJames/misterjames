@@ -80,7 +80,7 @@ These are just a few of many great questions you're going to have to think throu
 
 While your job is to create an experience (dialog) or set of experiences (dialogs) that will help the user get at what they need to, some users are hell bent on failure. Well, at least that's what it looks like when you're reviewing the logs.
 
-> when r u open and is there chocolate pie. it's for Wedsnday. it's my aunts birthday and i haven't seen her in a long time and I think she likes it. or we could have a cake if you have some  - Actual Facebook message
+> when r u open and is there chocolate pie. it's for Wedsnday. it's my aunts birthday and i haven't seen her in a long time and I think she likes it. or we could have a cake if you have some  - Actual Facebook user message
 
 In an upcoming post I'll share a lot more on this, but just know that you can't solve for "user" quite yet. It really comes down to making sure you guide the user, and we'll look at that in greater detail as we go.
 
