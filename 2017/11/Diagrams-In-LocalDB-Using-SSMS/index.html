@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Diagrams In LocalDB Using SSMS | They Call Me Mister James</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Often you’ll find that a project is of a size where the data model is easier to visualize if you…well…if you visualize it. The canonical way to do this for those of us on the MS stack is through datab">
+<meta name="keywords" content="ASP.NET Core MVC,SQL Server,SQL Server Management Studio,Entity Framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diagrams In LocalDB Using SSMS">
+<meta property="og:url" content="http://jameschambers.com/2017/11/Diagrams-In-LocalDB-Using-SSMS/index.html">
+<meta property="og:site_name" content="They Call Me Mister James">
+<meta property="og:description" content="Often you’ll find that a project is of a size where the data model is easier to visualize if you…well…if you visualize it. The canonical way to do this for those of us on the MS stack is through datab">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-title-slide.png">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-db-context-menu.png">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-adding-tables.png">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-simple-diagram.png">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-show-table-details.png">
+<meta property="og:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-column-save.png">
+<meta property="og:updated_time" content="2020-11-29T14:19:00.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Diagrams In LocalDB Using SSMS">
+<meta name="twitter:description" content="Often you’ll find that a project is of a size where the data model is easier to visualize if you…well…if you visualize it. The canonical way to do this for those of us on the MS stack is through datab">
+<meta name="twitter:image" content="https://jcblogimages.blob.core.windows.net/img/2017/ssms-title-slide.png">
+<meta name="twitter:creator" content="@CanadianJames">
+<meta name="twitter:site" content="CanadianJames">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="content/avatar.png">
+  
+  
+ <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600" rel="stylesheet" type="text/css">
+ <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2868185-6', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+  
+  <script src="//load.sumome.com/" data-sumo-site-id="34f480920bcf5ea13ec1605be65d32e86be89fb7177416fb68c2d2f1939aaa04" async="async"></script>
+</head></html>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/content/logo_round.png)"></i><span class="site-title">They Call Me Mister James</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/about/bootstrapping-mvc.html">Boostrapping MVC</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">Testimonials</a>
+        
+          <a class="main-nav-link" href="/about/genfu.html">GenFu</a>
+        
+        <a class="main-nav-link main-nav-link-highlight" href="https://hireme.jameschambers.com" target="_blank">Hire Me</a>
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="/content/avatar.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://jameschambers.com"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/about/bootstrapping-mvc.html">Boostrapping MVC</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/about">Testimonials</a></td>
+        
+          <td><a class="main-nav-link" href="/about/genfu.html">GenFu</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://jameschambers.com"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <h2 id="name">James Chambers</h2>
+      <h3 id="title">Husband, Father, Mentor, Humanitarian &amp; Software Developer</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Canada</span>
+      <a id="follow" href="https://twitter.com/canadianjames">FOLLOW</a>
+    </div>
+
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="/CanadianJames" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></td>
+          
+          <td><a href="http://github.com/MisterJames" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+          <td><a href="https://ca.linkedin.com/in/canadianjames" target="_blank" title="linkedin"><i class="fa fa-linkedin"></i></a></td>
+          
+          <td><a href="https://www.youtube.com/user/CodingMisterJames/" target="_blank" title="youtube"><i class="fa fa-youtube"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+
+    <div class="base-info profile-block">
+        <a href="http://aspnetmonsters.com" target="_blank"><img src="/content/monster-james.png"></a>      
+    </div>
+
+    <div class="base-info profile-block">
+        <a href="https://leanpub.com/bootstrappingmvc" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://leanpub.com/bootstrappingmvc', '\n\n']);">
+            <img src="https://s3.amazonaws.com/titlepages.leanpub.com/bootstrappingmvc/medium?1425560219" scale="0">
+        </a>
+    </div>
+        
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-Diagrams-In-LocalDB-Using-SSMS" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Diagrams In LocalDB Using SSMS
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/11/Diagrams-In-LocalDB-Using-SSMS/">
+      <time datetime="2017-11-06T21:17:28.000Z" itemprop="datePublished">2017-11-06</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Development/">Development</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Development/Database/">Database</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>Often you’ll find that a project is of a size where the data model is easier to visualize if you…well…if you visualize it. The canonical way to do this for those of us on the MS stack is through database diagrams in SQL Server Management Studio.</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-title-slide.png" alt="Make Sense of Your LocalDb Models with SSMS"></p>
+<a id="more"></a>
+<h2 id="Not-Every-Project-Has-a-Data-Analyst"><a href="#Not-Every-Project-Has-a-Data-Analyst" class="headerlink" title="Not Every Project Has a Data Analyst"></a>Not Every Project Has a Data Analyst</h2><p>Historically, a large number of organizations have worked with data analysts that develop the schema for an application given a set of requirements using a set of powerful designer tools. These tools are capable of generating change scripts, comparing databases for changes and drawing out the relationships between entities. This is more true for larger applications, certainly more true in the enterprise space, and is a practice you can still see in operation today particularily in working with legacy code.</p>
+<p>However, for smaller shops and projects and in the agile space, this is not the common approach. Many folks choose to evolve data models on the fly, use tools like data projects or migration tools like Roundhouse. And, in today’s advancements in EF, there are many projects that elect to use code first migrations which have evolved far beyond the one-way, strongly opinionated roots that first came to Entity Framework back in the unicorn days.</p>
+<p>In my travels and in mentoring developers over the last few years I’ve found a surprising number of folks who haven’t seen the tooling that is freely available to them through SQL Server Management Studio, also known as SSMS.</p>
+<h2 id="So-What-Does-My-Data-Look-Like"><a href="#So-What-Does-My-Data-Look-Like" class="headerlink" title="So, What Does My Data Look Like?"></a>So, What Does My Data Look Like?</h2><p>In an effort to better understand a fix or feature that I’m asked to help with, I often will sketch out the problem and the implementation. When this includes modifications to the schema I like to employ the use of a diagram in my effort.  While pen-and-paper would do just fine for most cases, it’s often handy to know data types, see any relationships and move things around as often as needed to clarify the picture of the problem I’m trying to solve.  And this is where tooling comes into play.</p>
+<p>SSMS is a medium-weight utility that clocks in just under a gig (<a href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms" target="_blank" rel="noopener">you can download it here</a>). It’s by no means small, but it is powerful and has some great cloud-connectivity capabilities as well. It’s designed for the fully-featured SQL Server SKUs, but it works just fine for LocalDB as well.</p>
+<p>To get started with diagrams in LocalDB, simply invoke the context menu with a right-click on your database’s “Database Diagrams” node in SSMS’s Object Explorer.</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-db-context-menu.png" alt="Context Menu When Clicking on a Database in the SSMS Object Explorer"></p>
+<p>Click on the option for “Install Diagram Support”.</p>
+<p><strong><em>Note</em></strong> I run on Windows 10 and I am not on a domain. There is no active directory on my machine. I have found that when I use code-first databases and EF migrations that I will get an error like <code>Microsoft SQL Server Error: 15404</code> saying:</p>
+<blockquote>
+<p>LocalDb could not obtain information about group/user (username)).</p>
+</blockquote>
+<p>This error also surfaces as ‘SQL Server error 0x534’, ‘0x54b’, ‘0x2147’.</p>
+<p>You can get past this error by elevating your privileges on the database in question using the following command. To execute, just right-click on your database to get that context menu back and select “New Query”, then paste this in (and fix your DB name):</p>
+<p><code>alter authorization on database::[your-db-name-no-quotes] to sa</code></p>
+<p>This is okay with LocalDb instances running on your machine, as I’m assuming that you’re going to be running this locally. Be sure to consider best practicies, application-level security and your company policies before changing database permissions for databases your organization makes available at large. </p>
+<p>With security set and ready to go you’re pretty much off to the races.</p>
+<h2 id="Creating-Diagrams"><a href="#Creating-Diagrams" class="headerlink" title="Creating Diagrams"></a>Creating Diagrams</h2><p>This part is super easy.  Now that diagram support has been added just invoke that context menu again, but instead, this time choose “New Database Diagram”.  A blank canvas will appear and you’ll be prompted to add tables.</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-adding-tables.png" alt="Add Tables to Your Diagrams"></p>
+<p>Select the tables you want to learn more about and add them to your diagram. SSMS draws out any relationships that exist.</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-simple-diagram.png" alt="A Simple Diagram in SSMS"></p>
+<p>By default, tables will be displayed with only the column names. A much more useful rendering is to switch to the “Standard” view which will reveal extended properties of the columns.</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-show-table-details.png" alt="Show Column Details in Your Database Diagram"></p>
+<h2 id="Careful-There-Young-Gunner"><a href="#Careful-There-Young-Gunner" class="headerlink" title="Careful, There, Young Gunner"></a>Careful, There, Young Gunner</h2><p>SSMS has a whole host of other features baked into diagrams that I tend to avoid. You can create new tables, modify columns, change properties and create relationships. </p>
+<p><strong>Don’t.</strong></p>
+<p>I can’t see many scenarios where this would be a good idea. These types of things should be done through a managed and repeatable process that can be easily propogated to other developer workstations or out into production. Using the designer to do this will break my heart and also a kitten will die.</p>
+<p>There is one case where this might be useful. If you are learning and want to better understand the SQL that is generated through the lens of something meaningful to you (like entities in your project) you might be able to use this as a learning tool. Go through with your changes in the designer (they are not saved by default), then select Database Diagram -&gt; Generate Change Scripts from the application menu. SSMS will prompt you to save out change scripts.</p>
+<p><strong>Note:</strong> You may need to enable the setting called “Prevent saving changes that require table re-creation” in order to get some types of edits to work, otherwise you’ll see a message saying that “Saving changes is not permitted.”</p>
+<p><img src="https://jcblogimages.blob.core.windows.net/img/2017/ssms-column-save.png" alt="Changes to a Table"></p>
+<p>You can enable that setting in Tools -&gt; Options -&gt; Designers. </p>
+<p>To it’s credit, SSMS does a healthy job of trying to preserve your data. Here, I’ve simply added a column to the <code>CampaignGoal</code> table, but you can see what SSMS is trying to do behind the scenes with its change script:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">SET QUOTED_IDENTIFIER ON</span><br><span class="line">SET ARITHABORT ON</span><br><span class="line">SET NUMERIC_ROUNDABORT OFF</span><br><span class="line">SET CONCAT_NULL_YIELDS_NULL ON</span><br><span class="line">SET ANSI_NULLS ON</span><br><span class="line">SET ANSI_PADDING ON</span><br><span class="line">SET ANSI_WARNINGS ON</span><br><span class="line">COMMIT</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.CampaignGoal</span><br><span class="line">	DROP CONSTRAINT FK_CampaignImpact_Campaign_CampaignId</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.Campaign SET (LOCK_ESCALATION = TABLE)</span><br><span class="line">GO</span><br><span class="line">COMMIT</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.CampaignGoal</span><br><span class="line">	DROP CONSTRAINT DF__CampaignI__Campa__0F624AF8</span><br><span class="line">GO</span><br><span class="line">CREATE TABLE dbo.Tmp_CampaignGoal</span><br><span class="line">	(</span><br><span class="line">	Id int NOT NULL IDENTITY (1, 1),</span><br><span class="line">	CurrentGoalLevel int NOT NULL,</span><br><span class="line">	Display bit NOT NULL,</span><br><span class="line">	GoalType int NOT NULL,</span><br><span class="line">	NumericGoal int NOT NULL,</span><br><span class="line">	TextualGoal nvarchar(MAX) NULL,</span><br><span class="line">	Notes nchar(10) NULL,</span><br><span class="line">	CampaignId int NOT NULL</span><br><span class="line">	)  ON [PRIMARY]</span><br><span class="line">	 TEXTIMAGE_ON [PRIMARY]</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.Tmp_CampaignGoal SET (LOCK_ESCALATION = TABLE)</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.Tmp_CampaignGoal ADD CONSTRAINT</span><br><span class="line">	DF__CampaignI__Campa__0F624AF8 DEFAULT ((0)) FOR CampaignId</span><br><span class="line">GO</span><br><span class="line">SET IDENTITY_INSERT dbo.Tmp_CampaignGoal ON</span><br><span class="line">GO</span><br><span class="line">IF EXISTS(SELECT * FROM dbo.CampaignGoal)</span><br><span class="line">	 EXEC(&apos;INSERT INTO dbo.Tmp_CampaignGoal (Id, CurrentGoalLevel, Display, GoalType, NumericGoal, TextualGoal, CampaignId)</span><br><span class="line">		SELECT Id, CurrentGoalLevel, Display, GoalType, NumericGoal, TextualGoal, CampaignId FROM dbo.CampaignGoal WITH (HOLDLOCK TABLOCKX)&apos;)</span><br><span class="line">GO</span><br><span class="line">SET IDENTITY_INSERT dbo.Tmp_CampaignGoal OFF</span><br><span class="line">GO</span><br><span class="line">DROP TABLE dbo.CampaignGoal</span><br><span class="line">GO</span><br><span class="line">EXECUTE sp_rename N&apos;dbo.Tmp_CampaignGoal&apos;, N&apos;CampaignGoal&apos;, &apos;OBJECT&apos; </span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.CampaignGoal ADD CONSTRAINT</span><br><span class="line">	PK_CampaignImpact PRIMARY KEY CLUSTERED </span><br><span class="line">	(</span><br><span class="line">	Id</span><br><span class="line">	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]</span><br><span class="line"></span><br><span class="line">GO</span><br><span class="line">CREATE NONCLUSTERED INDEX IX_CampaignImpact_CampaignId ON dbo.CampaignGoal</span><br><span class="line">	(</span><br><span class="line">	CampaignId</span><br><span class="line">	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]</span><br><span class="line">GO</span><br><span class="line">ALTER TABLE dbo.CampaignGoal ADD CONSTRAINT</span><br><span class="line">	FK_CampaignImpact_Campaign_CampaignId FOREIGN KEY</span><br><span class="line">	(</span><br><span class="line">	CampaignId</span><br><span class="line">	) REFERENCES dbo.Campaign</span><br><span class="line">	(</span><br><span class="line">	Id</span><br><span class="line">	) ON UPDATE  NO ACTION </span><br><span class="line">	 ON DELETE  CASCADE </span><br><span class="line">	</span><br><span class="line">GO</span><br><span class="line">COMMIT</span><br></pre></td></tr></table></figure>
+<p>Personally, I find <code>dotnet ef migrations add new-notes-field</code> a lot easier to do.</p>
+<h2 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h2><p>Database Diagrams are local to your computer and are not part of your code base. If you’re using EF and code-first, chances are you’ve never seen a “picture” of your model. Grab yourself a copy of <a href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms" target="_blank" rel="noopener">SQL Server Management Studio</a> and get sketching. </p>
+<p>That feature ain’t going to finish itself ;)</p>
+<p>Happy coding!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jameschambers.com/2017/11/Diagrams-In-LocalDB-Using-SSMS/" data-id="cki3a08yo000vfskmgkfyk01i" class="article-share-link">Share</a>
+      
+        <a href="http://jameschambers.com/2017/11/Diagrams-In-LocalDB-Using-SSMS/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ASP-NET-Core-MVC/">ASP.NET Core MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Entity-Framework/">Entity Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server-Management-Studio/">SQL Server Management Studio</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/AllReady-Moving-to-the-Next-Level/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AllReady - Moving to the Next Level
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/ASP-NET-Core-Training-in-Calgary-AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ASP.NET Core Training in Calgary, Alberta</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recent</h3>
+    <div class="widget">
+      <ul id="recent-post" class="no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-title"><a href="/2020/11/Processing-Google-reCaptcha-Tokens-in-ASP-NET-Core/" class="title">Processing Google reCaptcha Tokens in ASP.NET Core</a></p>
+              <p class="item-date"><time datetime="2020-11-29T14:26:04.000Z" itemprop="datePublished">2020-11-29</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-title"><a href="/2019/06/No-Type-Was-Specified-for-the-Decimal-Column/" class="title">No Type Was Specified for the Decimal Column</a></p>
+              <p class="item-date"><time datetime="2019-06-21T12:19:24.000Z" itemprop="datePublished">2019-06-21</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-title"><a href="/2018/07/removing-bower-from-asp-net-mvc-core-applications/" class="title">Removing Bower - The command &quot;bower install&quot; exited with code 1 When Publishing</a></p>
+              <p class="item-date"><time datetime="2018-07-12T10:42:00.000Z" itemprop="datePublished">2018-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-title"><a href="/2018/03/bakebot/bots-day-2-choosing-a-channel/" class="title">Choosing a Channel for the Microsoft Bot Framework</a></p>
+              <p class="item-date"><time datetime="2018-03-11T02:16:13.000Z" itemprop="datePublished">2018-03-10</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-title"><a href="/2018/03/bakebot/bots-day-1-What-a-Bot-Is/" class="title">BakeBot Day 1: What a Bot Is (And What It Is Not)</a></p>
+              <p class="item-date"><time datetime="2018-03-09T05:12:54.000Z" itemprop="datePublished">2018-03-08</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">Buy me a coffee?</h3>
+    <div class="widget">
+        <a href="https://www.paypal.me/jameschambers/3.5usd" target="_blank"><img src="/content/coffee.png"></a>
+    </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/30DaysMvcBootstrap/" style="font-size: 18px;">30DaysMvcBootstrap</a> <a href="/tags/5-days-of-Azure-Functions/" style="font-size: 12.67px;">5 days of Azure Functions</a> <a href="/tags/8DaysOfTableStorage/" style="font-size: 11.33px;">8DaysOfTableStorage</a> <a href="/tags/ASP-NET/" style="font-size: 15.33px;">ASP.NET</a> <a href="/tags/ASP-NET-5/" style="font-size: 10.67px;">ASP.NET 5</a> <a href="/tags/ASP-NET-Core/" style="font-size: 16px;">ASP.NET Core</a> <a href="/tags/ASP-NET-Core-MVC/" style="font-size: 12.67px;">ASP.NET Core MVC</a> <a href="/tags/ActionFilters/" style="font-size: 10px;">ActionFilters</a> <a href="/tags/AllReady/" style="font-size: 10px;">AllReady</a> <a href="/tags/Android/" style="font-size: 10.67px;">Android</a> <a href="/tags/AngelaSmith/" style="font-size: 10px;">AngelaSmith</a> <a href="/tags/Asp-Net-MVC/" style="font-size: 20px;">Asp.Net MVC</a> <a href="/tags/Authentication/" style="font-size: 10.67px;">Authentication</a> <a href="/tags/Azure/" style="font-size: 17.33px;">Azure</a> <a href="/tags/Azure-Functions/" style="font-size: 13.33px;">Azure Functions</a> <a href="/tags/Azure-Web-Apps/" style="font-size: 10px;">Azure Web Apps</a> <a href="/tags/Azure-Websites/" style="font-size: 13.33px;">Azure Websites</a> <a href="/tags/BUILD/" style="font-size: 10px;">BUILD</a> <a href="/tags/BakeBot/" style="font-size: 10px;">BakeBot</a> <a href="/tags/BitBucket/" style="font-size: 10px;">BitBucket</a> <a href="/tags/Bootstrap/" style="font-size: 16px;">Bootstrap</a> <a href="/tags/Bot-Framework/" style="font-size: 12px;">Bot Framework</a> <a href="/tags/CTT-NUG/" style="font-size: 10px;">CTT .NUG</a> <a href="/tags/Calgary/" style="font-size: 10px;">Calgary</a> <a href="/tags/Chez-Angela/" style="font-size: 10px;">Chez Angela</a> <a href="/tags/Cisco-VPN/" style="font-size: 10px;">Cisco VPN</a> <a href="/tags/ClearMeasure/" style="font-size: 10.67px;">ClearMeasure</a> <a href="/tags/CodeProject/" style="font-size: 11.33px;">CodeProject</a> <a href="/tags/Cognitive-Services/" style="font-size: 10px;">Cognitive Services</a> <a href="/tags/Conferences/" style="font-size: 10.67px;">Conferences</a> <a href="/tags/CouchDb/" style="font-size: 10px;">CouchDb</a> <a href="/tags/DNX/" style="font-size: 10px;">DNX</a> <a href="/tags/Dojo/" style="font-size: 10px;">Dojo</a> <a href="/tags/EF-Core/" style="font-size: 10px;">EF Core</a> <a href="/tags/Email/" style="font-size: 10.67px;">Email</a> <a href="/tags/Entity-Framework/" style="font-size: 14px;">Entity Framework</a> <a href="/tags/Extension-Methods/" style="font-size: 10px;">Extension Methods</a> <a href="/tags/FontAwesome/" style="font-size: 10.67px;">FontAwesome</a> <a href="/tags/GenFu/" style="font-size: 10px;">GenFu</a> <a href="/tags/GetManifestResourceStream/" style="font-size: 10px;">GetManifestResourceStream</a> <a href="/tags/Git/" style="font-size: 11.33px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/HackAThon/" style="font-size: 10px;">HackAThon</a> <a href="/tags/HtmlHelper/" style="font-size: 10px;">HtmlHelper</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/JSON/" style="font-size: 10.67px;">JSON</a> <a href="/tags/Keynote/" style="font-size: 10px;">Keynote</a> <a href="/tags/Life-Hack/" style="font-size: 10px;">Life Hack</a> <a href="/tags/Life-Hacking/" style="font-size: 10.67px;">Life Hacking</a> <a href="/tags/Life-Hacks/" style="font-size: 12.67px;">Life Hacks</a> <a href="/tags/Linq/" style="font-size: 10px;">Linq</a> <a href="/tags/MIX11/" style="font-size: 10px;">MIX11</a> <a href="/tags/MVA/" style="font-size: 10.67px;">MVA</a> <a href="/tags/MVC/" style="font-size: 19.33px;">MVC</a> <a href="/tags/MVC5/" style="font-size: 18.67px;">MVC5</a> <a href="/tags/MVC6/" style="font-size: 13.33px;">MVC6</a> <a href="/tags/MVP/" style="font-size: 10px;">MVP</a> <a href="/tags/Make-Code-Not-War/" style="font-size: 10px;">Make Code Not War</a> <a href="/tags/MeasureUp/" style="font-size: 10px;">MeasureUp</a> <a href="/tags/Metro/" style="font-size: 10px;">Metro</a> <a href="/tags/Microsoft/" style="font-size: 10px;">Microsoft</a> <a href="/tags/Microsoft-Band/" style="font-size: 12px;">Microsoft Band</a> <a href="/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/tags/Mobile-Services/" style="font-size: 10px;">Mobile Services</a> <a href="/tags/Motivate/" style="font-size: 10px;">Motivate</a> <a href="/tags/MvcScaffolding/" style="font-size: 11.33px;">MvcScaffolding</a> <a href="/tags/Not-Coding-At-All/" style="font-size: 10px;">Not Coding At All</a> <a href="/tags/NuGet/" style="font-size: 15.33px;">NuGet</a> <a href="/tags/OData/" style="font-size: 10px;">OData</a> <a href="/tags/PayPal/" style="font-size: 10px;">PayPal</a> <a href="/tags/PostSharp/" style="font-size: 10px;">PostSharp</a> <a href="/tags/Practice/" style="font-size: 10.67px;">Practice</a> <a href="/tags/Practice-of-Awesome/" style="font-size: 10px;">Practice of Awesome</a> <a href="/tags/PrairieDevCon/" style="font-size: 16.67px;">PrairieDevCon</a> <a href="/tags/Queues/" style="font-size: 10px;">Queues</a> <a href="/tags/REST/" style="font-size: 10px;">REST</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Razor/" style="font-size: 10.67px;">Razor</a> <a href="/tags/Real-Life/" style="font-size: 10px;">Real Life</a> <a href="/tags/Regina/" style="font-size: 10.67px;">Regina</a> <a href="/tags/Remote-Work/" style="font-size: 11.33px;">Remote Work</a> <a href="/tags/Resolve/" style="font-size: 10px;">Resolve</a> <a href="/tags/Rock-Paper-Scissors/" style="font-size: 10px;">Rock Paper Scissors</a> <a href="/tags/Routing/" style="font-size: 10px;">Routing</a> <a href="/tags/Ruby-on-Rails/" style="font-size: 10px;">Ruby on Rails</a> <a href="/tags/SDEC/" style="font-size: 10px;">SDEC</a> <a href="/tags/SOAP/" style="font-size: 10px;">SOAP</a> <a href="/tags/SQL-Server/" style="font-size: 10.67px;">SQL Server</a> <a href="/tags/SQL-Server-Management-Studio/" style="font-size: 10px;">SQL Server Management Studio</a> <a href="/tags/ServiceBus/" style="font-size: 10px;">ServiceBus</a> <a href="/tags/SignalR/" style="font-size: 11.33px;">SignalR</a> <a href="/tags/Speaking/" style="font-size: 11.33px;">Speaking</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Table-Storage/" style="font-size: 10.67px;">Table Storage</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Unit-Testing/" style="font-size: 10px;">Unit Testing</a> <a href="/tags/Visual-Studio/" style="font-size: 10.67px;">Visual Studio</a> <a href="/tags/Visual-Studio-11/" style="font-size: 11.33px;">Visual Studio 11</a> <a href="/tags/Visual-Studio-2010/" style="font-size: 16.67px;">Visual Studio 2010</a> <a href="/tags/Visual-Studio-2012/" style="font-size: 12.67px;">Visual Studio 2012</a> <a href="/tags/Visual-Studio-2013/" style="font-size: 10.67px;">Visual Studio 2013</a> <a href="/tags/Visual-Studio-2015/" style="font-size: 16px;">Visual Studio 2015</a> <a href="/tags/Visual-Studio-2017/" style="font-size: 12.67px;">Visual Studio 2017</a> <a href="/tags/Visual-Studio-2019/" style="font-size: 10px;">Visual Studio 2019</a> <a href="/tags/WCF/" style="font-size: 10.67px;">WCF</a> <a href="/tags/Web-API/" style="font-size: 12.67px;">Web API</a> <a href="/tags/Web-Development/" style="font-size: 10px;">Web Development</a> <a href="/tags/Web-Services/" style="font-size: 10.67px;">Web Services</a> <a href="/tags/Windows-8/" style="font-size: 11.33px;">Windows 8</a> <a href="/tags/Windows-Azure/" style="font-size: 10px;">Windows Azure</a> <a href="/tags/Windows-Phone/" style="font-size: 14.67px;">Windows Phone</a> <a href="/tags/Windws-Live-Writer/" style="font-size: 10px;">Windws Live Writer</a> <a href="/tags/Winnipeg/" style="font-size: 10.67px;">Winnipeg</a> <a href="/tags/bower/" style="font-size: 10px;">bower</a> <a href="/tags/c/" style="font-size: 14px;">c#</a> <a href="/tags/compiling/" style="font-size: 10px;">compiling</a> <a href="/tags/jQuery/" style="font-size: 12px;">jQuery</a> <a href="/tags/jQuery-UI/" style="font-size: 10.67px;">jQuery UI</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/npm/" style="font-size: 10.67px;">npm</a> <a href="/tags/open-source/" style="font-size: 10.67px;">open source</a> <a href="/tags/reCaptcha/" style="font-size: 10px;">reCaptcha</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/seed-data/" style="font-size: 10px;">seed data</a> <a href="/tags/testing/" style="font-size: 10px;">testing</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">42</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">36</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 1999 - 2020 James Chambers<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'jameschambers';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
