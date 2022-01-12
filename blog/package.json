@@ -22,6 +22,6 @@
     "hexo-renderer-stylus": "^0.3.0",
     "hexo-server": "^0.1.2",
     "hexo-tag-markdown": "^1.0.8",
-    "markdown-it": "^8.1.0"
+    "markdown-it": "^12.3.2"
   }
 }
